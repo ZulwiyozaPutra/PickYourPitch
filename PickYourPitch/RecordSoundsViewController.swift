@@ -59,6 +59,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
             audioRecorder = try AVAudioRecorder(url: fileURL!, settings: [String: AnyObject]())
         } catch _ {
         }
+        
         audioRecorder.delegate = self
         audioRecorder.isMeteringEnabled = true;
         audioRecorder.prepareToRecord()

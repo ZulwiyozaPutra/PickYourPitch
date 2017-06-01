@@ -16,10 +16,10 @@ class PlaySoundsViewController: UIViewController {
     // MARK: Properties
     
     let SliderValueKey = "Slider Value Key"
-    var audioPlayer:AVAudioPlayer!
-    var receivedAudio:RecordedAudio!
-    var audioEngine:AVAudioEngine!
-    var audioFile:AVAudioFile!
+    var audioPlayer: AVAudioPlayer!
+    var receivedAudio: RecordedAudio!
+    var audioEngine: AVAudioEngine!
+    var audioFile: AVAudioFile!
     
     // MARK: Outlets
     
@@ -32,11 +32,16 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let sliderValue = UserDefaults.standard.value(forKey: "sliderValue") as? Float {
+            sliderView.setValue(sliderValue, animated: false)
+        }
+        
         do {
             audioPlayer = try AVAudioPlayer(contentsOf: receivedAudio.filePathUrl as URL)
         } catch _ {
             audioPlayer = nil
         }
+        
         audioPlayer.enableRate = true
 
         audioEngine = AVAudioEngine()
@@ -80,6 +85,7 @@ class PlaySoundsViewController: UIViewController {
     
     @IBAction func sliderDidMove(_ sender: UISlider) {
         print("Slider vaue: \(sliderView.value)")
+        UserDefaults.standard.set(sliderView.value, forKey: "sliderValue")
     }
     
     // MARK: Play Audio
